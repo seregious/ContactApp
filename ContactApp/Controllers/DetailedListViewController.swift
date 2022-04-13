@@ -9,7 +9,7 @@ import UIKit
 
 class DetailedListViewController: UITableViewController {
     
-    let data = Person.getPersonList()
+    var data: [Person]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,15 +17,15 @@ class DetailedListViewController: UITableViewController {
 
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        1//data.personsList.count
+        data.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        data.count
+        2
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "\(data.count)"
+        data[section].fullName
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -33,9 +33,19 @@ class DetailedListViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         let person = data[indexPath.row]
         
-        content.text = person.fullName
-        content.secondaryText = person.email + " " + String(person.phoneNumber)
+        if indexPath.row == 0 {
+            content.text = person.phoneNumber
+            content.image = UIImage(systemName: "candybarphone")
+        } else {
+            content.text = person.email
+            content.image = UIImage(systemName: "envelope")
+        }
+        
         cell.contentConfiguration = content
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

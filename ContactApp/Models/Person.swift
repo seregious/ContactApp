@@ -24,22 +24,16 @@ struct Person {
     
     static func getPersonList() -> [Person] {
         var personsList = [Person]()
-        let data = DataManager()
-        let range = 0...(data.firstNames.count - 1)
-        for _ in range {
-            let range = 0...(data.firstNames.count - 1)
-            let randomNumberFirstName = Int.random(in: range)
-            let randomNumberSecondName = Int.random(in: range)
-            let randomNumberImage = Int.random(in: range)
+        let data = DataManager.shared
+
+        for (firstName, (secondName, avatar)) in zip(data.firstNames, zip(data.secondNames, data.avatars)) {
             let person = Person(
-                firstName: data.firstNames[randomNumberFirstName],
-                secondName: data.secondNames[randomNumberSecondName],
-                avatar: data.avatars[randomNumberImage]
+                firstName: firstName,
+                secondName: secondName,
+                avatar: avatar
             )
+            
             personsList.append(person)
-            data.firstNames.remove(at: randomNumberFirstName)
-            data.secondNames.remove(at: randomNumberSecondName)
-            data.avatars.remove(at: randomNumberImage)
         }
         return personsList
     }
@@ -57,17 +51,6 @@ struct Person {
             }
         }
         return formattedNumber
-    }
-}
-
-class DataManager {
-        
-    var firstNames = ["Daniela", "Serhan", "Jessa", "Jaala", "Ariadna", "Zerah", "Vera", "Luigsech", "Lutgardis", "Shaun", "Zilla", "Radka", "Guorthigirn", "Andebert", "Shafaqat"]
-    var secondNames = ["Wynne", "Joshi", "Del Bosque", "Ongaro", "Radić", "Caoindealbháin", "Carson", "Nieddu", "O'Clery", "Belmonte", "Antonsen", "Danielson", "Porras", "Hanley", "Lowry"]
-    var avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar6", "avatar7", "avatar8", "avatar9", "avatar10", "avatar11", "avatar12", "avatar13", "avatar14", "avatar15"]
-    
-    init() {
-        
     }
 }
 
